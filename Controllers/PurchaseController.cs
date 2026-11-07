@@ -7,19 +7,23 @@ namespace PurchaseMockApi.Controllers
     public class PurchaseRequestsController : ControllerBase
     {
         private static bool _isSystemDown = false;
+        private static int _orderCounter = 1000;
 
         [HttpPost]
         public IActionResult CreateRequest([FromBody] PurchaseRequest request)
         {
             if (_isSystemDown)
             {
-                return StatusCode(503, new { message = "Service Unavailable (Simulated failure via toggle-status)" });
+                return StatusCode(503, new { message = "Service Unavailable" });
             }
+
+            var orderNumber = $"PO-{DateTime.UtcNow.Year}-{_orderCounter++}";
 
             return Ok(new
             {
                 Message = "Zahtevek uspešno sprejet!",
                 RequestId = Guid.NewGuid(),
+                PurchaseOrderNumber = orderNumber,
                 Data = request,
                 Timestamp = DateTime.UtcNow
             });
