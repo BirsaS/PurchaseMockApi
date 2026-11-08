@@ -42,7 +42,7 @@ namespace PurchaseMockApi.Controllers
         string Title,
         decimal Amount,
         string Department,
-        string ProposedSupplier,
+        string? ProposedSupplier,
         DateTime DesiredDeliveryDate
     );
 }
